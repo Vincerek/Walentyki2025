@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="walentynki.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <title>Walentynka</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <h1>Czy zostaniesz moją walentynką?</h1>
+  <IMG SRC="animation1.gif">
+  <div class="button-container">
+    <button id="yesBtn">Tak!</button>
+    <button id="noBtn">Nie</button>
+    
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const noButtonLabels = [
+      "Nie",
+      "TY MNIE W OGOLE KOCHASZ?",
+      "Pamiętasz,że już jesteśmy 4 lata?",
+      "NICOLE!!!",
+      "Napewno?",
+      "No weź",
+      "Ej no co ty",
+      "Nie masz wyboru",
+      "To twoja ostatnia szansa",
+      "Żartowałem, ale no weź się zgódź",
+
+
+    ];
+    let yesSize = 1;
+    let scaling =0.25;
+    let noClickCount = 0;
+
+
+    // When "No" is clicked, make the "Yes" button bigger.
+    noBtn.addEventListener('click', () => {
+      yesSize += scaling;
+      yesBtn.style.transform = `scale(${yesSize})`; 
+      noBtn.style.marginLeft = `${yesSize * 48}px`;
+      noClickCount++;
+      const nextLabel = noButtonLabels[noClickCount % noButtonLabels.length];
+      noBtn.textContent = nextLabel;
+    });
+
+    emailjs.init("bPH7Nbsq8FhhP4nTx"); // Replace with your EmailJS Public Key
+
+    yesBtn.addEventListener('click', () => {
+      emailjs.send("service_v72kkff", "template_sfr4yrw", {
+      to_email: "vincer@omegastar.eu",
+      subject: "Walentynka",
+      message: "Tak, zostanę Twoją walentynką! ❤️"
+     }).then(() => {
+        document.body.innerHTML = `
+        <h1 style="color: #e60073; font-size: 3rem; text-align: center;">
+          Filip został powiadomiony! Wesołych Walentynek skarbie! ❤️
+        </h1>
+        <IMG SRC="panda.jpg">
+      `;
+  }).catch((error) => {
+    alert("Błąd wysyłania emaila: " + error.text);
+  });
+});
+
+  </script>
+</body>
+</html>
